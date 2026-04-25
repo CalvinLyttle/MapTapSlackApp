@@ -2,6 +2,7 @@ import com.slack.api.bolt.App;
 import com.slack.api.bolt.socket_mode.SocketModeApp;
 import com.slack.api.methods.request.conversations.ConversationsHistoryRequest;
 import com.slack.api.methods.response.chat.ChatPostMessageResponse;
+import com.slack.api.methods.response.conversations.ConversationsHistoryResponse;
 import com.slack.api.model.event.MessageEvent;
 import listeners.Listeners;
 import maptap.Tapbot;
@@ -19,7 +20,12 @@ public class Main {
                 .channel(convoID)
                 .limit(999)
                 .build();
-        app.client().conversationsHistory(historyReq).getMessages().forEach(m -> {
+        ConversationsHistoryResponse resp = app.client().conversationsHistory(historyReq);
+        if (!resp.isOk()) {
+            System.out.println("ERROR: failed to get channel - " + resp.getError());
+            return;
+        }
+        resp.getMessages().reversed().forEach(m -> {
             String body = m.getText();
             String name = m.getUser();
             if (body != null && body.contains("maptap.gg") && !body.contains("challenge")) {
@@ -47,20 +53,20 @@ public class Main {
             return ctx.ack();
         });
         app.command("/stats", (req, ctx) -> {
-            ChatPostMessageResponse response = ctx.client().chatPostMessage(
-                r -> r.channel(req.getPayload().getChannelId()).text(tapbot.stats())
-            );
-            if(!response.isOk()) {
+            ChatPostMessageResponse response = ctx.client()
+                    .chatPostMessage(
+                            r -> r.channel(req.getPayload().getChannelId()).text(tapbot.stats()));
+            if (!response.isOk()) {
                 ctx.logger.error("Error posting message: " + response.getError());
             }
             return ctx.ack();
         });
-        app.command("playerStats", (req, ctx) -> {
+        app.command("/playerstats", (req, ctx) -> {
             String name = req.getPayload().getText();
-            ChatPostMessageResponse response = ctx.client().chatPostMessage(
-                r -> r.channel(req.getPayload().getChannelId()).text(tapbot.playerStats(name))
-            );
-            if(!response.isOk()) {
+            ChatPostMessageResponse response = ctx.client()
+                    .chatPostMessage(
+                            r -> r.channel(req.getPayload().getChannelId()).text(tapbot.playerStats(name)));
+            if (!response.isOk()) {
                 ctx.logger.error("Error posting message: " + response.getError());
             }
             return ctx.ack();

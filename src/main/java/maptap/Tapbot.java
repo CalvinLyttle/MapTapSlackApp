@@ -60,12 +60,12 @@ public class Tapbot {
         sb.append("All time stats\n");
         sb.append("Best round: ")
                 .append(highScore)
-                .append(" held by <")
+                .append(" held by <@")
                 .append(highScorePlayer.name)
                 .append(">\n");
         sb.append("Worst round: ")
                 .append(lowScore)
-                .append(" held by <")
+                .append(" held by <@")
                 .append(lowScorePlayer.name)
                 .append(">\n");
         return sb.toString();
