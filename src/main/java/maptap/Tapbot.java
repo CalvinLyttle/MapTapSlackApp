@@ -9,10 +9,17 @@ public class Tapbot {
     private Leaderboard allTimeLeaderboard;
     private Day today;
 
+    private Player highScorePlayer;
+    private int highScore;
+    private Player lowScorePlayer;
+    private int lowScore;
+
     public Tapbot() {
         this.days = new HashMap<>();
         this.players = new HashMap<>();
         this.allTimeLeaderboard = new Leaderboard();
+        lowScore = Integer.MAX_VALUE;
+        highScore = 0;
     }
 
     public void addMsg(String body, String name) {
@@ -33,6 +40,41 @@ public class Tapbot {
         player.addScore(msg.score);
         today.updateLeaderboard(player, msg.score);
         allTimeLeaderboard.update(player, player.totalScore);
+
+        if (msg.score > highScore) {
+            highScore = msg.score;
+            highScorePlayer = player;
+        }
+        if (msg.score < lowScore) {
+            lowScore = msg.score;
+            lowScorePlayer = player;
+        }
+    }
+
+    public String stats() {
+        StringBuffer sb = new StringBuffer();
+        if (highScorePlayer == null || lowScorePlayer == null) {
+            sb.append("No stats to display");
+            return sb.toString();
+        }
+        sb.append("All time stats\n");
+        sb.append("Best round: ")
+                .append(highScore)
+                .append(" held by <")
+                .append(highScorePlayer.name)
+                .append(">\n");
+        sb.append("Worst round: ")
+                .append(lowScore)
+                .append(" held by <")
+                .append(lowScorePlayer.name)
+                .append(">\n");
+        return sb.toString();
+    }
+
+    public String playerStats(String name) {
+        Player player = players.get(name);
+        if (player == null) return "Player has no rounds to log";
+        else return player.getStats();
     }
 
     public String endOfDay() {

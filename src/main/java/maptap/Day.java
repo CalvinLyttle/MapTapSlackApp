@@ -4,20 +4,20 @@ import java.util.ArrayList;
 
 public class Day {
     protected Leaderboard leaderboard;
-    protected ArrayList<Player> guessers;
+    protected ArrayList<Player> players;
     private String date;
 
     public Day(String date) {
         this.date = date;
         this.leaderboard = new Leaderboard();
-        this.guessers = new ArrayList<>();
+        this.players = new ArrayList<>();
     }
 
     public boolean addPlayer(Player player) {
-        if (guessers.contains(player)) {
+        if (players.contains(player)) {
             return false;
         }
-        guessers.add(player);
+        players.add(player);
         return true;
     }
 

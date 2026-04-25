@@ -46,6 +46,25 @@ public class Main {
             }
             return ctx.ack();
         });
+        app.command("/stats", (req, ctx) -> {
+            ChatPostMessageResponse response = ctx.client().chatPostMessage(
+                r -> r.channel(req.getPayload().getChannelId()).text(tapbot.stats())
+            );
+            if(!response.isOk()) {
+                ctx.logger.error("Error posting message: " + response.getError());
+            }
+            return ctx.ack();
+        });
+        app.command("playerStats", (req, ctx) -> {
+            String name = req.getPayload().getText();
+            ChatPostMessageResponse response = ctx.client().chatPostMessage(
+                r -> r.channel(req.getPayload().getChannelId()).text(tapbot.playerStats(name))
+            );
+            if(!response.isOk()) {
+                ctx.logger.error("Error posting message: " + response.getError());
+            }
+            return ctx.ack();
+        });
         // SocketModeApp expects an env variable: SLACK_APP_TOKEN
         new SocketModeApp(app).start();
     }
