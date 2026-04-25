@@ -35,7 +35,8 @@ public class Player {
         StringBuilder sb = new StringBuilder();
         sb.append("\nTotal score: ").append(this.totalScore);
         sb.append("\n:gem: Best score: ").append(this.topScore);
-        sb.append("\n:toilet: Worst score: ").append(this.worstScore).append("\n");
+        sb.append("\n:toilet: Worst score: ").append(this.worstScore);
+        sb.append("\n:robot_face: Average score: ").append(this.averageScore).append("\n");
         return sb.toString();
     }
 }
