@@ -15,7 +15,6 @@ public class Main {
         Tapbot tapbot = new Tapbot();
         Listeners.register(app);
         final String convoID = System.getenv("GAMECHANNEL_ID");
-        // TODO: error check
         ConversationsHistoryRequest historyReq = ConversationsHistoryRequest.builder()
                 .channel(convoID)
                 .limit(999)
@@ -62,7 +61,15 @@ public class Main {
             return ctx.ack();
         });
         app.command("/playerstats", (req, ctx) -> {
-            String name = req.getPayload().getText();
+            String text = req.getPayload().getText();
+            ctx.logger.info("Getting logs for text: " + text);
+            int pipeIndex = text.indexOf('|');
+            if (pipeIndex == -1) {
+                ctx.logger.error("Invalid command format. Expected: /playerstats <@username>");
+                return ctx.ack();
+            }
+            String name = text.substring(2, pipeIndex);
+            ctx.logger.info("Getting logs for user: " + name);
             ChatPostMessageResponse response = ctx.client()
                     .chatPostMessage(
                             r -> r.channel(req.getPayload().getChannelId()).text(tapbot.playerStats(name)));

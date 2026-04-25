@@ -53,6 +53,7 @@ public class Tapbot {
 
     public String stats() {
         StringBuffer sb = new StringBuffer();
+        sb.append("Executing /stats\n");
         if (highScorePlayer == null || lowScorePlayer == null) {
             sb.append("No stats to display");
             return sb.toString();
@@ -72,9 +73,10 @@ public class Tapbot {
     }
 
     public String playerStats(String name) {
+        String cmd = "Executing /playerstats <<@" + name + ">>\n";
         Player player = players.get(name);
-        if (player == null) return "Player has no rounds to log";
-        else return player.getStats();
+        if (player == null) return cmd + "Player has no rounds to log";
+        else return cmd + player.getStats();
     }
 
     public String endOfDay() {

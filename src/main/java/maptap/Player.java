@@ -33,7 +33,6 @@ public class Player {
 
     public String getStats() {
         StringBuilder sb = new StringBuilder();
-        sb.append("<@").append(this.name).append(">'s Stats");
         sb.append("\nTotal score: ").append(this.totalScore);
         sb.append("\n:gem: Best score: ").append(this.topScore);
         sb.append("\n:toilet: Worst score: ").append(this.worstScore).append("\n");
