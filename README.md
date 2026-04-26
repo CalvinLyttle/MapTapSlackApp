@@ -1,3 +1,17 @@
+# Slack Bot for tracking scores in maptap
+
+Based on Bolt for Slack (see readme below).
+
+Tracks every maptap.gg score message (excluding the timed MapTap challenge mode)
+
+## Commands
+
+`/eod`: gives summary of the day's scores, as well as the updated all-time score
+`/stats`: gives summary stats for the all-time high and low scores
+`/playerstats @player`: gives stats for a given slack member _NOTE_ you must @ them and get their actual user
+
+---
+
 # Bolt for Java Template App
 
 This is a generic Bolt for Java template app used to build out Slack apps.
