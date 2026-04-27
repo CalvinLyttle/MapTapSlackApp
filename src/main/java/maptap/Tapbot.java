@@ -80,8 +80,10 @@ public class Tapbot {
     }
 
     public String endOfDay() {
-        String currDay = java.time.LocalDate.now().getMonth() + " "
-                + java.time.LocalDate.now().getDayOfMonth();
+        String currDay =
+                java.time.LocalDate.now(java.time.ZoneId.of("America/New_York")).getMonth() + " "
+                        + java.time.LocalDate.now(java.time.ZoneId.of("America/New_York"))
+                                .getDayOfMonth();
         if (!today.isToday()) {
             today = days.get(currDay);
         }
