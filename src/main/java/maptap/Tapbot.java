@@ -1,6 +1,8 @@
 package maptap;
 
 import java.util.ArrayList;
+import java.util.Comparator;
+import java.time.ZoneId;
 import java.util.HashMap;
 import java.util.List;
 
@@ -104,13 +106,28 @@ public class Tapbot {
                     .append(String.format("%.1f", d.worstGuessAverage()))
                     .append("\n");
         }
+    public String averages() {
+        StringBuilder sb = new StringBuilder();
+        sb.append("Executing /averages\n");
+        if (players.isEmpty()) {
+            sb.append("No averages to display");
+            return sb.toString();
+        }
+        sb.append("Average scores:\n");
+        players.values().stream()
+                .sorted(Comparator.comparingInt((Player p) -> p.averageScore).reversed())
+                .forEach(p -> sb.append("<@")
+                        .append(p.name)
+                        .append(">: ")
+                        .append(p.averageScore)
+                        .append("\n"));
         return sb.toString();
     }
 
     public String endOfDay() {
-        String currDay = java.time.LocalDate.now().getMonth() + " "
-                + java.time.LocalDate.now().getDayOfMonth();
-        if (!today.isToday()) {
+        java.time.ZonedDateTime now = java.time.ZonedDateTime.now(ZoneId.of("America/New_York"));
+        String currDay = now.getMonth() + " " + now.getDayOfMonth();
+        if (today == null || !today.isToday()) {
             today = days.get(currDay);
         }
         if (today == null) {

@@ -1,5 +1,6 @@
 package maptap;
 
+import java.time.ZoneId;
 import java.util.ArrayList;
 
 public class Day {
@@ -65,8 +66,8 @@ public class Day {
     }
 
     public boolean isToday() {
-        String currDay = java.time.LocalDate.now().getMonth() + " "
-                + java.time.LocalDate.now().getDayOfMonth();
+        java.time.ZonedDateTime now = java.time.ZonedDateTime.now(ZoneId.of("America/New_York"));
+        String currDay = now.getMonth() + " " + now.getDayOfMonth();
         System.out.println("Checking if " + date + " is today (" + currDay + ")...");
         return date.equals(currDay);
     }
