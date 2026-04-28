@@ -1,8 +1,8 @@
 package maptap;
 
+import java.time.ZoneId;
 import java.util.ArrayList;
 import java.util.Comparator;
-import java.time.ZoneId;
 import java.util.HashMap;
 import java.util.List;
 
@@ -106,6 +106,9 @@ public class Tapbot {
                     .append(String.format("%.1f", d.worstGuessAverage()))
                     .append("\n");
         }
+        return sb.toString();
+    }
+
     public String averages() {
         StringBuilder sb = new StringBuilder();
         sb.append("Executing /averages\n");
