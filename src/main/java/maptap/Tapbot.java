@@ -1,5 +1,6 @@
 package maptap;
 
+import java.util.Comparator;
 import java.util.HashMap;
 
 public class Tapbot {
@@ -77,6 +78,24 @@ public class Tapbot {
         Player player = players.get(name);
         if (player == null) return cmd + "Player has no rounds to log";
         else return cmd + player.getStats();
+    }
+
+    public String averages() {
+        StringBuilder sb = new StringBuilder();
+        sb.append("Executing /averages\n");
+        if (players.isEmpty()) {
+            sb.append("No averages to display");
+            return sb.toString();
+        }
+        sb.append("Average scores:\n");
+        players.values().stream()
+                .sorted(Comparator.comparingInt((Player p) -> p.averageScore).reversed())
+                .forEach(p -> sb.append("<@")
+                        .append(p.name)
+                        .append(">: ")
+                        .append(p.averageScore)
+                        .append("\n"));
+        return sb.toString();
     }
 
     public String endOfDay() {
