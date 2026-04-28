@@ -60,6 +60,15 @@ public class Main {
             }
             return ctx.ack();
         });
+        app.command("/averages", (req, ctx) -> {
+            ChatPostMessageResponse response = ctx.client()
+                    .chatPostMessage(
+                            r -> r.channel(req.getPayload().getChannelId()).text(tapbot.averages()));
+            if (!response.isOk()) {
+                ctx.logger.error("Error posting message: " + response.getError());
+            }
+            return ctx.ack();
+        });
         app.command("/playerstats", (req, ctx) -> {
             String text = req.getPayload().getText();
             ctx.logger.info("Getting logs for text: " + text);
