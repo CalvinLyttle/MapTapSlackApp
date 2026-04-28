@@ -1,48 +1,39 @@
 {
   "display_information": {
-    "name": "Bolt Template App"
+    "name": "MapTap Tracker"
   },
   "features": {
-    "app_home": {
-      "home_tab_enabled": true,
-      "messages_tab_enabled": false,
-      "messages_tab_read_only_enabled": true
-    },
     "bot_user": {
-      "display_name": "Bolt Template App",
+      "display_name": "MapTap Tracker",
       "always_online": false
     },
-    "shortcuts": [
-      {
-        "name": "Run sample shortcut",
-        "type": "global",
-        "callback_id": "sample-shortcut-id",
-        "description": "Runs a sample shortcut"
-      }
-    ],
     "slash_commands": [
       {
-        "command": "/sample-command",
-        "description": "Runs a sample command",
+        "command": "/eod",
+        "description": "Summary of the day's scores plus updated all-time score",
+        "should_escape": false
+      },
+      {
+        "command": "/stats",
+        "description": "All-time high and low score stats",
+        "should_escape": false
+      },
+      {
+        "command": "/playerstats",
+        "description": "Stats for a given player",
+        "usage_hint": "@player",
         "should_escape": false
       }
     ]
   },
   "oauth_config": {
     "scopes": {
-      "bot": [
-        "channels:history",
-        "chat:write",
-        "commands"
-      ]
+      "bot": ["channels:history", "chat:write", "commands"]
     }
   },
   "settings": {
     "event_subscriptions": {
-      "bot_events": [
-        "app_home_opened",
-        "message.channels"
-      ]
+      "bot_events": ["message.channels"]
     },
     "interactivity": {
       "is_enabled": true
