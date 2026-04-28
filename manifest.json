@@ -23,6 +23,11 @@
         "description": "Stats for a given player",
         "usage_hint": "@player",
         "should_escape": false
+      },
+      {
+        "command": "/worst-locations",
+        "description": "Five worst days by combined average score",
+        "should_escape": false
       }
     ]
   },
