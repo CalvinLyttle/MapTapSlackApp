@@ -1,6 +1,7 @@
 package maptap;
 
 import java.util.Comparator;
+import java.time.ZoneId;
 import java.util.HashMap;
 
 public class Tapbot {
@@ -99,9 +100,9 @@ public class Tapbot {
     }
 
     public String endOfDay() {
-        String currDay = java.time.LocalDate.now().getMonth() + " "
-                + java.time.LocalDate.now().getDayOfMonth();
-        if (!today.isToday()) {
+        java.time.ZonedDateTime now = java.time.ZonedDateTime.now(ZoneId.of("America/New_York"));
+        String currDay = now.getMonth() + " " + now.getDayOfMonth();
+        if (today == null || !today.isToday()) {
             today = days.get(currDay);
         }
         if (today == null) {
