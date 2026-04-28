@@ -1,8 +1,10 @@
 package maptap;
 
+import java.util.ArrayList;
 import java.util.Comparator;
 import java.time.ZoneId;
 import java.util.HashMap;
+import java.util.List;
 
 public class Tapbot {
 
@@ -41,6 +43,7 @@ public class Tapbot {
         }
         player.addScore(msg.score);
         today.updateLeaderboard(player, msg.score);
+        today.recordScores(msg.guesses, msg.score);
         allTimeLeaderboard.update(player, player.totalScore);
 
         if (msg.score > highScore) {
@@ -81,6 +84,28 @@ public class Tapbot {
         else return cmd + player.getStats();
     }
 
+    public String worstLocations() {
+        StringBuilder sb = new StringBuilder();
+        sb.append("Executing /worst-locations\n");
+        if (days.isEmpty()) {
+            sb.append("No locations to display");
+            return sb.toString();
+        }
+        List<Day> sorted = new ArrayList<>(days.values());
+        sorted.sort((a, b) -> Double.compare(a.averageFinalScore(), b.averageFinalScore()));
+        sb.append("Five worst locations by average score:\n");
+        int n = Math.min(5, sorted.size());
+        for (int i = 0; i < n; i++) {
+            Day d = sorted.get(i);
+            sb.append(i + 1)
+                    .append(". ")
+                    .append(d.getDate().toLowerCase())
+                    .append(" — worst guess: #")
+                    .append(d.worstGuessNumber())
+                    .append(" — avg: ")
+                    .append(String.format("%.1f", d.worstGuessAverage()))
+                    .append("\n");
+        }
     public String averages() {
         StringBuilder sb = new StringBuilder();
         sb.append("Executing /averages\n");

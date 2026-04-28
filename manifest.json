@@ -25,6 +25,8 @@
         "should_escape": false
       },
       {
+        "command": "/worst-locations",
+        "description": "Five worst days by combined average score",
         "command": "/averages",
         "description": "Every player's average score, ranked high to low",
         "should_escape": false
